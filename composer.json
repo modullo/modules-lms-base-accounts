@@ -1,0 +1,49 @@
+{
+  "name": "modullo/modules-lms-base-accounts",
+  "description": "description",
+  "license": "GPL-3.0-or-later",
+  "authors": [
+    {
+      "name": "Damilare Abiodun",
+      "email": "dami@appyclan.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.3",
+    "aws/aws-sdk-php": "^3.74",
+    "laravel/framework": "^8.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7.5"
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-4": {
+      "Modullo\\ModulesLmsBaseAccounts\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Modullo\\ModulesLmsBaseAccounts\\ModulesLmsBaseAccountsServiceProvider"
+      ]
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {
+
+    "post-install-cmd": [
+      "Illuminate\\Foundation\\ComposerScripts::postInstall",
+      "php artisan optimize",
+      "php artisan vendor:publish"
+    ],
+    "post-update-cmd": [
+      "php artisan optimize",
+      "php artisan vendor:publish"
+    ]
+  }
+}
