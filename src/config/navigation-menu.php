@@ -18,7 +18,7 @@ return [
                 'dashboard' => 'all',
                 'title' => 'Learners',
                 'route' => '',
-                'link' => '/tenant/learners/index',
+                'link' => '/tenant/learners',
                 'clickable' => true,
                 'navbar' => true,
                 'order' => 0,
