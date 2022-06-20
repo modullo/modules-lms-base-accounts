@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Modullo\ModulesLmsBaseAccounts\Http\Requests\StoreModulesLmsBaseAccountsTenantRequest;
+use Modullo\ModulesLmsBaseAccounts\Http\Requests\UpdateModulesLmsBaseAccountsTenantRequest;
 use Modullo\ModulesLmsBaseAccounts\Services\ModulesLmsBaseAccountsTenantService;
 
 class ModulesLmsBaseAccountsTenantController extends Controller
@@ -22,9 +23,9 @@ class ModulesLmsBaseAccountsTenantController extends Controller
         $this->accountService = new ModulesLmsBaseAccountsTenantService();
     }
 
-    public function index()
+    public function index(Sdk $sdk)
     {
-        $data = [];
+        $data = $this->accountService->getLearners($sdk);
         return view('modules-lms-base-accounts::tenants.learner.index',compact('data'));
     }
 
@@ -48,15 +49,18 @@ class ModulesLmsBaseAccountsTenantController extends Controller
         return view('modules-lms-base-accounts::tenants.learner.show');
     }
 
-    public function edit(string $id)
+    public function edit(string $id, Sdk $sdk)
     {
-        //
-        return view('modules-lms-base-accounts::tenants.learner.edit');
+        $learner = $this->accountService->getSingleLearner($id,$sdk);
+        if(isset($learner['error'])){
+            return back()->with($learner);
+        }
+        return view('modules-lms-base-accounts::tenants.learner.edit',compact('learner'));
     }
 
-    public function update(string $id, Sdk $sdk)
+    public function update(UpdateModulesLmsBaseAccountsTenantRequest $request, $id, Sdk $sdk)
     {
-        //
+        return $this->accountService->updateLearner($request->all(),$sdk);
     }
 
     public function delete(string $id)

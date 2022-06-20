@@ -8,19 +8,29 @@ class ModulesLmsBaseAccountsTenantService
 {
 
     public function getLearners(Sdk $sdk){
-        $query = $sdk->createRegistrationService();
+        $query = $sdk->createLearnersService();
         $query = $query->addQueryArgument('limit',100);
         $path = [''];
         $response = $query->send('get',$path);
-        dd($response);
         if (!$response->isSuccessful()) {
             $response = $response->getData();
             if ($response['errors'][0]['code'] === '005') return response()->json(['error' => $response['errors'][0]['source'] ?? ''],$response['errors'][0]['status']);
             return response()->json(['error' => $response['errors'][0]['title'] ?? ''],$response['errors'][0]['status']);
-
         }
+        return $response->getData()['users'];
+    }
 
-        return response()->json(['message' => 'User successfully created'],200);
+    public function getSingleLearner($id,Sdk $sdk){
+        $query = $sdk->createLearnersService();
+        $path = [$id];
+        $response = $query->send('get',$path);
+        if (!$response->isSuccessful()) {
+            $response = $response->getData();
+            if ($response['errors'][0]['code'] === '005') return response()->json(['error' => $response['errors'][0]['source'] ?? ''],$response['errors'][0]['status']);
+//            return response()->json(['error' => $response['errors'][0]['title'] ?? ''],$response['errors'][0]['status']);
+            return  ['error' => 'unable to fetch the requested resource'];
+        }
+        return $response->getData()['learner'];
     }
 
     public function createLearner($params, Sdk $sdk){
@@ -89,5 +99,27 @@ class ModulesLmsBaseAccountsTenantService
         }
 
         return $data;
+    }
+
+    public function updateLearner($params, Sdk $sdk){
+        $resource = $sdk->createLearnersService();
+        $resource = $resource
+            ->addBodyParam('first_name',$params['first_name'])
+            ->addBodyParam('last_name',$params['last_name'])
+            ->addBodyParam('phone_number',$params['phone_number'])
+            ->addBodyParam('gender',$params['gender'])
+            ->addBodyParam('location',$params['location']);
+        if(!empty($params['password'])){
+            $resource->addBodyParam('password',$params['password']);
+        }
+        $response = $resource->send('put',[$params['id']]);
+        if (!$response->isSuccessful()) {
+            $response = $response->getData();
+            if ($response['errors'][0]['code'] === '005') return response()->json(['error' => $response['errors'][0]['source'] ?? ''],$response['errors'][0]['status']);
+            return response()->json(['error' => $response['errors'][0]['title'] ?? ''],$response['errors'][0]['status']);
+
+        }
+
+        return response()->json(['message' => 'User successfully updated'],200);
     }
 }

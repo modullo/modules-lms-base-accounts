@@ -16,9 +16,9 @@ class UpdateModulesLmsBaseAccountsTenantRequest extends FormRequest
         return [
             'first_name' => ['required', 'string', 'max:100'],
             'last_name' => ['required', 'string', 'max:100'],
-            'email' => ['required','email'],
+//            'email' => ['required','email'],
             'phone_number' => ['required'],
-            'password' => ['required', 'string', 'min:6'],
+            'password' => ['nullable', 'string', 'min:6'],
             'gender' => ['nullable','string','in:male,female'],
             'image' => ['nullable','string'],
             'location' => ['nullable','string'],
