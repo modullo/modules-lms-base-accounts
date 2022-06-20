@@ -21,92 +21,74 @@
         <breadcrumbs 
             :items="[
                 {url: '/tenant/dashboard', title: 'Home', active: false},
-                {url: '/tenant/programs', title: 'Program', active: false},
-                {url: '', title: 'Edit Program', active: true},
+                {url: '/tenant/learners', title: 'Learners', active: false},
+                {url: '', title: 'Edit Learner', active: true},
             ]">
         </breadcrumbs>
         <div class="container">
-            <h3 class="mt-5">Edit Program</h3>
+            <h3 class="mt-5">Edit Learner</h3>
 
             <div class="mx-auto mt-5 card col">
                 <div class="card-body">
                     <form class="form" @submit.prevent="validateBeforeSubmit">
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="title">Program Title *</label>
+                                <label for="first_name">First Name *</label>
                                 <p class="control has-icon has-icon-right">
-                                    <input name="Title" class="form-control" v-model="form.title" v-validate="'required'"
-                                        :class="{'input': true, 'border border-danger': errors.has('Title') }" type="text"
-                                        placeholder="Enter Program Title">
-                                    <i v-show="errors.has('Title')" class="fa fa-warning text-danger"></i>
-                                    <span v-show="errors.has('Title')"
-                                        class="help text-danger">@{{ errors . first('Title') }}</span>
+                                    <input id="first_name" name="first_name" class="form-control" v-model="form.first_name" v-validate="'required'"
+                                           :class="{'input': true, 'border border-danger': errors.has('first_name') }" type="text"
+                                           placeholder="Enter first name">
+                                    <i v-show="errors.has('first_name')" class="fa fa-warning text-danger"></i>
+                                    <span v-show="errors.has('first_name')" class="help text-danger">@{{ errors . first('first_name') }}</span>
                                 </p>
                             </div>
-                            <input type="hidden" name="program_id" value="form.id">
-
-                            <div class="form-group col-md-3">
-                                <label for="visibilitytype"> Visibility type * </label>
-
-                                <select
-                                    v-validate="'required'"
-                                    :class="{'input': true, 'border border-danger': errors.has('Visibility Type') }"
-                                    class="form-control"
-                                    name="Visibility Type"
-                                    v-model="form.visibility_type"
-                                    id="visibilitytype"
-
-                                >
-                                    <option disabled selected="selected" :value="form.visibility_type" >
-                                      @{{ form.visibility_type }}
-                                    </option>
-
-                                    <option v-show="form.visibility_type !== 'public'" value="public">Public </option>
-                                    <option v-show="form.visibility_type !== 'private'" value="private">Private</option>
-                                </select>
-                                <i v-show="errors.has('Visibility Type')" class="fa fa-warning text-danger"></i>
-                                    <span v-show="errors.has('Visibility Type')"
-                                        class="help text-danger">@{{ errors . first('Visibility Type') }}</span>
+                            <div class="form-group col-md-6">
+                                <label for="last_name">Last Name *</label>
+                                <p class="control has-icon has-icon-right">
+                                    <input id="last_name" name="last_name" class="form-control" v-model="form.last_name" v-validate="'required'"
+                                           :class="{'input': true, 'border border-danger': errors.has('last_name') }" type="text"
+                                           placeholder="Enter last name">
+                                    <i v-show="errors.has('last_name')" class="fa fa-warning text-danger"></i>
+                                    <span v-show="errors.has('last_name')" class="help text-danger">@{{ errors . first('last_name') }}</span>
+                                </p>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-lg-6 ">
-                                <label for="description"> Program Description * </label>
-                                <textarea
-                                    v-validate="'required'"
-                                    :class="{'input': true, 'border border-danger': errors.has('Program Description') }"
-                                    class="form-control"
-                                    name="Program Description"
-                                    id="description"
-                                    placeholder="Program Description"
-                                    rows="3"
-                                    v-model="form.description"
-                                ></textarea>
-                                <i v-show="errors.has('Program Description')" class="fa fa-warning text-danger"></i>
-                                <span v-show="errors.has('Program Description')"
-                                    class="help text-danger">@{{ errors.first('Program Description') }}</span>
+                            <div class="form-group col-md-6">
+                                <label for="email">Email *</label>
+                                <p class="control has-icon has-icon-right">
+                                    <input id="email" name="email" class="form-control" v-model="form.email"
+                                           :class="{'input': true, 'border border-danger': errors.has('email') }" type="text"
+                                           placeholder="Enter email address" readonly>
+                                    <i v-show="errors.has('email')" class="fa fa-warning text-danger"></i>
+                                    <span v-show="errors.has('email')" class="help text-danger">@{{ errors . first('email') }}</span>
+                                </p>
                             </div>
-                            <div class="form-group col-lg-6">
-                                <label for="">
-                                    Program Cover image
-                                </label>
-                                <input
-                                    type="file"
-                                    v-on:change="accessImage"
-                                    class="mx-auto form-control-file"
-                                    aria-describedby="fileHelpId"
-                                />
+                            <div class="form-group col-md-6">
+                                <label for="phone_number">Phone Number *</label>
+                                <p class="control has-icon has-icon-right">
+                                    <input id="phone_number" name="phone_number" class="form-control" v-model="form.phone_number" v-validate="'required'"
+                                           :class="{'input': true, 'border border-danger': errors.has('phone_number') }" type="text"
+                                           placeholder="Enter phone number">
+                                    <i v-show="errors.has('phone_number')" class="fa fa-warning text-danger"></i>
+                                    <span v-show="errors.has('phone_number')" class="help text-danger">@{{ errors . first('phone_number') }}</span>
+                                </p>
                             </div>
-
+                            <div class="form-group col-md-6">
+                                <label for="password">Password</label>
+                                <p class="control has-icon has-icon-right">
+                                    <input id="password" name="password" class="form-control" v-model="form.password"
+                                           :class="{'input': true, 'border border-danger': errors.has('password') }" type="password"
+                                           placeholder="Enter password">
+                                    <i v-show="errors.has('password')" class="fa fa-warning text-danger"></i>
+                                    <span v-show="errors.has('password')" class="help text-danger">@{{ errors . first('password') }}</span>
+                                </p>
+                            </div>
                         </div>
 
                         <div class="submit-btn d-flex justify-content-between align-items-center">
-                        <span class="muted">
-
-                            fields with *  are required
-                        </span>
-
-                            <button type="submit" class="btn btn-outline-secondary">Update Program</button>
+                            <span class="muted">
+                                fields with *  are required
+                            </span>
+                            <button type="submit" class="btn btn-outline-secondary">Update Learner</button>
                         </div>
                     </form>
                 </div>
@@ -156,8 +138,8 @@
             el: "#app",
 
             data: {
-                form: {!! json_encode($data) !!},
-                baseUrl: 'http://127.0.0.1:9000/tenant/programs/'
+                form: {!! json_encode($learner) !!},
+                baseUrl: 'http://127.0.0.1:9000/tenant/learners/'
             },
 
             methods: {
@@ -168,28 +150,31 @@
                     this.$validator.validateAll().then((result) => {
                         if (result) {
                             let loader = Vue.$loading.show()
-                            this.uploadImage()
-                            .then(() => {
-                                axios.put(`${this.form.id}`,this.form).then(res => {
-                                    loader.hide();
-                                    toastr["success"](res.data.message)
-                                }).catch(e => {
-                                    loader.hide();
-                                    if(e.response.data.error){
-                                        toastr["error"](e.response.data.error)
-                                    }
-                                    else if(e.response.data.validation_error){
-                                        Object.entries(e.response.data.validation_error).forEach(
-                                            ([, value]) => {
-                                                toastr["error"](value)
-                                            },
-                                        )
-                                    }
+                            axios.put('/tenant/learners/'+this.form.id,this.form).then(res => {
+                                loader.hide();
+                                toastr["success"](res.data.message)
+                            }).catch(e => {
+                                loader.hide();
+                                // console.log(e.response.data.error)
+                                const errors = e.response.data.error
+                                if (e.response.status === 400) {
+                                    Object.entries(errors).forEach(
+                                        ([, value]) => {
+                                            toastr["error"](value)
+                                        },
+                                    )
+                                } else {
+                                    toastr["error"](e.response.data.error)
 
-                                    //please be checking the status type before you just do a foreach please
-
-                                }) 
+                                }
                             })
+                            // ev.target.reset()
+                            /*
+                                                this.uploadImage()
+
+                                                .then(() => {
+                                                })
+                            */
                         }
                     });
                 },
