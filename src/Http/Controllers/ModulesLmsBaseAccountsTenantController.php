@@ -15,18 +15,25 @@ use Modullo\ModulesLmsBaseAccounts\Services\ModulesLmsBaseAccountsTenantService;
 
 class ModulesLmsBaseAccountsTenantController extends Controller
 {
-    protected Sdk $sdk;
+//    protected Sdk $sdk;
     protected $accountService;
-    public function __construct(Sdk $sdk)
+    public function __construct()
     {
-        $this->sdk = $sdk;
+//        $this->sdk = $sdk;
         $this->accountService = new ModulesLmsBaseAccountsTenantService();
     }
 
     public function index(Sdk $sdk)
     {
         $data = $this->accountService->getLearners($sdk);
+        if(\request()->wantsJson()){
+            return response()->json(['status' => 'Success','data'=>$data],200);
+        }
         return view('modules-lms-base-accounts::tenants.learner.index',compact('data'));
+    }
+    public function index2()
+    {
+        return 'here*';
     }
 
     public function create()

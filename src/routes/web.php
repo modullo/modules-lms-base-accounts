@@ -6,7 +6,7 @@ use Modullo\ModulesLmsLearningBase\Http\Controllers\ModulesLmsBaseAccountsContro
 Route::group(['namespace' => 'Modullo\ModulesLmsBaseAccounts\Http\Controllers','middleware' => ['web']],function() {
 
 
-    Route::middleware('auth')->group(function () {
+    Route::middleware('auth:sanctum')->group(function () {
         Route::group(['prefix' => 'tenant'],function(){
 //            Route::get('/learners','ModulesLmsLearningBaseTenantController@management')->name('tenant-learners');
             Route::post('learners/store-bulk','ModulesLmsBaseAccountsTenantController@storeBulk');
