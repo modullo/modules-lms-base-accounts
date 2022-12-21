@@ -43,15 +43,22 @@ class ModulesLmsBaseAccountsTenantService
             ->addBodyParam('password',$params['password'] ?: 'pa$$word')
             ->addBodyParam('company_id',\auth()->user()->email)
             ->addBodyParam('role','lms_learner');
+
+        if (request()->hasHeader('src') && request()->header('src') == '3p'){
+            $resource = $resource
+                ->addBodyParam('uuid',request()->id)
+                ->addBodyParam('src','3p');
+        }
+
         $response = $resource->send('post',['']);
         if (!$response->isSuccessful()) {
             $response = $response->getData();
-            if ($response['errors'][0]['code'] === '005') return response()->json(['error' => $response['errors'][0]['source'] ?? ''],$response['errors'][0]['status']);
-            return response()->json(['error' => $response['errors'][0]['title'] ?? ''],$response['errors'][0]['status']);
+            if ($response['errors'][0]['code'] === '005') return response()->json(['status' => false,'message' => $response['errors'][0]['source'] ?? '','error' => $response['errors'][0]['source'] ?? ''],$response['errors'][0]['status']);
+            return response()->json(['status' => false,'message' => $response['errors'][0]['title'] ?? '','error' => $response['errors'][0]['title'] ?? ''],$response['errors'][0]['status']);
 
         }
 
-        return response()->json(['message' => 'User successfully created'],200);
+        return response()->json(['status' => true,'message' => 'User successfully created'],200);
     }
 
     public function processCSV($file,Sdk $sdk){
