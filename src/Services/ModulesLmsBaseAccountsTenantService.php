@@ -47,6 +47,7 @@ class ModulesLmsBaseAccountsTenantService
         if (request()->hasHeader('src') && request()->header('src') == '3p'){
             $resource = $resource
                 ->addBodyParam('uuid',request()->id)
+                ->addBodyParam('full_data',request()->all())
                 ->addBodyParam('src','3p');
         }
 
