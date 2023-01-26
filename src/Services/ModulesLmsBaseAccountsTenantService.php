@@ -33,6 +33,20 @@ class ModulesLmsBaseAccountsTenantService
         return $response->getData()['learner'];
     }
 
+    public function getSingleLearnerByEmail($email,Sdk $sdk){
+        $query = $sdk->createLearnersService();
+        $path = ['by-email'];
+        $query = $query->addQueryArgument('email',$email);
+        $response = $query->send('get',$path);
+        if (!$response->isSuccessful()) {
+            $response = $response->getData();
+            if ($response['errors'][0]['code'] === '005') return response()->json(['error' => $response['errors'][0]['source'] ?? ''],$response['errors'][0]['status']);
+//            return response()->json(['error' => $response['errors'][0]['title'] ?? ''],$response['errors'][0]['status']);
+            return  ['error' => 'unable to fetch the requested resource'];
+        }
+        return $response->getData()['learner'];
+    }
+
     public function createLearner($params, Sdk $sdk){
         $resource = $sdk->createRegistrationService();
         $resource = $resource
